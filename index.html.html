@@ -1,0 +1,2878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Online Library — RVR & JC College of Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root {
+  --lavender-50: #f5f3ff;
+  --lavender-100: #ede9fe;
+  --lavender-200: #ddd6fe;
+  --lavender-300: #c4b5fd;
+  --lavender-400: #a78bfa;
+  --lavender-500: #8b5cf6;
+  --lavender-600: #7c3aed;
+  --lavender-700: #6d28d9;
+  --lavender-800: #5b21b6;
+  --lavender-900: #4c1d95;
+  --lavender-light: #E6E6FA;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --text-primary: #1e1b4b;
+  --text-secondary: #4c1d95;
+  --text-muted: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f3ff;
+  --bg-card: #ffffff;
+  --border: #e0d7ff;
+  --shadow-sm: 0 2px 8px rgba(124,58,237,0.08);
+  --shadow-md: 0 4px 20px rgba(124,58,237,0.12);
+  --shadow-lg: 0 8px 40px rgba(124,58,237,0.18);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f0a1e;
+  --bg-secondary: #1a1232;
+  --bg-card: #1e1542;
+  --text-primary: #e9e4ff;
+  --text-secondary: #c4b5fd;
+  --text-muted: #a78bfa;
+  --border: #2d2060;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+============================================================ */
+.hidden { display: none !important; }
+.page { display: none; }
+.page.active { display: block; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--lavender-500), var(--lavender-700));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(124,58,237,0.35);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(124,58,237,0.45);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--lavender-300);
+}
+.btn-outline:hover {
+  background: var(--lavender-100);
+  border-color: var(--accent);
+}
+.btn-danger {
+  background: #fee2e2;
+  color: #dc2626;
+  border: none;
+}
+.btn-danger:hover { background: #fecaca; }
+.btn-success {
+  background: linear-gradient(135deg, #34d399, #059669);
+  color: #fff;
+}
+.btn-sm { padding: 8px 18px; font-size: 0.85rem; }
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-available { background: #d1fae5; color: #065f46; }
+.badge-unavailable { background: #fee2e2; color: #991b1b; }
+
+/* ============================================================
+   NAVBAR
+============================================================ */
+#navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition);
+}
+[data-theme="dark"] #navbar {
+  background: rgba(15,10,30,0.92);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+.nav-logo {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--lavender-400), var(--lavender-700));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: var(--shadow-sm);
+}
+.nav-title { font-family: var(--font-display); }
+.nav-title strong { display: block; font-size: 1rem; color: var(--text-primary); line-height: 1.2; }
+.nav-title span { font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-body); font-weight: 400; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+.nav-links a, .nav-links button {
+  padding: 8px 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+}
+.nav-links a:hover, .nav-links button:hover {
+  color: var(--accent);
+  background: var(--lavender-100);
+}
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+#theme-toggle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all var(--transition);
+}
+#theme-toggle:hover { border-color: var(--accent); }
+#user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--lavender-100);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+/* ============================================================
+   HOME PAGE
+============================================================ */
+#page-home { padding-top: 80px; }
+
+/* Hero */
+.hero {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 40%, #ddd6fe 100%);
+}
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #0f0a1e 0%, #1a1232 40%, #2d1b69 100%);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+}
+.hero-blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #c4b5fd, #8b5cf6);
+  top: -100px; right: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+.hero-blob-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, #e0d7ff, #a78bfa);
+  bottom: -80px; left: -80px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(5deg); }
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--lavender-200);
+  color: var(--lavender-700);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.6s ease both;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  animation: fadeInUp 0.7s ease 0.1s both;
+}
+.hero h1 .highlight {
+  color: var(--accent);
+  position: relative;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+  line-height: 1.8;
+  animation: fadeInUp 0.7s ease 0.2s both;
+}
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.7s ease 0.3s both;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+  animation: fadeInUp 0.7s ease 0.4s both;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.stat-lbl { font-size: 0.8rem; color: var(--text-muted); }
+.hero-visual {
+  position: relative;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+.hero-card-stack {
+  position: relative;
+  height: 420px;
+}
+.hero-card {
+  position: absolute;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+.hero-card-main {
+  width: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+.hero-card-1 {
+  width: 240px;
+  left: 5%;
+  top: 10%;
+  transform: rotate(-6deg);
+  z-index: 1;
+  opacity: 0.7;
+}
+.hero-card-2 {
+  width: 240px;
+  right: 5%;
+  bottom: 10%;
+  transform: rotate(5deg);
+  z-index: 2;
+  opacity: 0.8;
+}
+.hc-genre {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--lavender-500);
+  margin-bottom: 8px;
+}
+.hc-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.hc-author { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; }
+.hc-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #059669;
+  font-weight: 600;
+}
+.hc-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.5; } }
+
+@keyframes fadeInUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* Features Section */
+.section { padding: 90px 0; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-tag {
+  display: inline-block;
+  background: var(--lavender-100);
+  color: var(--lavender-700);
+  padding: 6px 18px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+.feature-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: linear-gradient(90deg, var(--lavender-400), var(--lavender-600));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+}
+.feature-card:hover::before { transform: scaleX(1); }
+.feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.feature-icon {
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, var(--lavender-100), var(--lavender-200));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+.feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+/* Footer */
+footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 60px 0 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+.footer-brand h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.footer-brand p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+.footer-col h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   LOGIN PAGE
+============================================================ */
+#page-login {
+  min-height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px 40px;
+  background: linear-gradient(135deg, var(--lavender-50) 0%, var(--lavender-100) 100%);
+}
+#page-login.active { display: flex; }
+[data-theme="dark"] #page-login {
+  background: linear-gradient(135deg, #0f0a1e, #1a1232);
+}
+.login-container {
+  width: 100%;
+  max-width: 480px;
+  animation: fadeInUp 0.5s ease;
+}
+.login-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+.login-header { text-align: center; margin-bottom: 36px; }
+.login-icon {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--lavender-400), var(--lavender-700));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.3);
+}
+.login-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.login-header p { color: var(--text-muted); font-size: 0.9rem; }
+.role-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: var(--bg-secondary);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  margin-bottom: 28px;
+}
+.role-tab {
+  padding: 10px 8px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.role-tab.active {
+  background: var(--bg-card);
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transition: all var(--transition);
+  outline: none;
+}
+.form-group input:focus {
+  border-color: var(--lavender-400);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 4px rgba(167,139,250,0.15);
+}
+.form-error { color: #dc2626; font-size: 0.8rem; margin-top: 6px; display: none; }
+.login-footer { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); }
+.login-hints {
+  background: var(--lavender-50);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 20px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border: 1px solid var(--lavender-200);
+}
+[data-theme="dark"] .login-hints { background: #1a1232; }
+.login-hints strong { color: var(--accent); display: block; margin-bottom: 6px; }
+.login-hints div { margin-bottom: 3px; }
+
+/* ============================================================
+   DASHBOARD LAYOUT (shared by admin, teacher, student)
+============================================================ */
+.dashboard-page {
+  display: none;
+  padding-top: 80px;
+  min-height: 100vh;
+}
+.dashboard-page.active { display: flex; }
+
+.sidebar {
+  width: 260px;
+  min-height: calc(100vh - 80px);
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  padding: 28px 16px;
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+.sidebar-header {
+  padding: 0 12px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.sidebar-role {
+  display: inline-block;
+  padding: 4px 14px;
+  background: var(--lavender-100);
+  color: var(--lavender-700);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.sidebar-user-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.sidebar-nav { list-style: none; }
+.sidebar-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  padding: 16px 12px 6px;
+}
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+.sidebar-nav a:hover { background: var(--lavender-100); color: var(--accent); }
+.sidebar-nav a.active { background: linear-gradient(135deg, var(--lavender-500), var(--lavender-700)); color: #fff; }
+.sidebar-nav a .icon { font-size: 1.1rem; }
+
+.main-content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+  min-width: 0;
+}
+.main-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.main-content .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+/* ============================================================
+   STATS CARDS
+============================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.stat-card-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.stat-card-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+.stat-card-lbl { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+/* ============================================================
+   CATEGORIES GRID
+============================================================ */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+}
+.category-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 28px 22px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.category-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lavender-400), var(--lavender-600));
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+.category-card:hover::after { transform: scaleX(1); }
+.category-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.cat-emoji { font-size: 2.4rem; display: block; margin-bottom: 12px; }
+.cat-name { font-weight: 600; font-size: 0.92rem; color: var(--text-primary); margin-bottom: 6px; }
+.cat-count { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ============================================================
+   BOOKS PAGE
+============================================================ */
+.books-toolbar {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  min-width: 240px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  padding: 12px 18px 12px 44px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  outline: none;
+  transition: all var(--transition);
+}
+.search-box input:focus { border-color: var(--lavender-400); }
+.search-box .search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+.filter-select, .sort-select {
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition);
+}
+.filter-select:focus, .sort-select:focus { border-color: var(--lavender-400); }
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+.book-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.book-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+.book-cover {
+  height: 140px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--lavender-100), var(--lavender-200));
+}
+.book-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+.book-author { font-size: 0.82rem; color: var(--text-muted); }
+.book-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.book-price { font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+.book-year { font-size: 0.78rem; color: var(--text-muted); }
+.book-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+
+/* ============================================================
+   ADMIN TABLE
+============================================================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.data-table th {
+  background: var(--lavender-100);
+  color: var(--lavender-800);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.8px;
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+.data-table tr:hover td { background: var(--lavender-50); }
+[data-theme="dark"] .data-table tr:hover td { background: #1e1542; }
+.table-wrapper {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.panel {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  animation: fadeInUp 0.3s ease;
+}
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+.modal-footer { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group select {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  outline: none;
+  transition: all var(--transition);
+}
+.form-group select:focus { border-color: var(--lavender-400); }
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  max-width: 380px;
+  animation: slideIn 0.3s ease;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+.toast.success { border-left: 4px solid #059669; }
+.toast.error { border-left: 4px solid #dc2626; }
+.toast.info { border-left: 4px solid var(--lavender-500); }
+@keyframes slideIn {
+  from { opacity:0; transform: translateX(100%); }
+  to { opacity:1; transform: translateX(0); }
+}
+@keyframes slideOut {
+  from { opacity:1; transform: translateX(0); }
+  to { opacity:0; transform: translateX(100%); }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+.page-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.page-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 16px; }
+.empty-state h3 { font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; }
+.empty-state p { font-size: 0.9rem; }
+
+/* Loading */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.spinner {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 4px solid var(--lavender-200);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.breadcrumb a { color: var(--accent); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .sidebar { 
+    position: fixed;
+    left: -260px;
+    top: 80px;
+    z-index: 500;
+    transition: left var(--transition);
+    height: calc(100vh - 80px);
+  }
+  .sidebar.open { left: 0; }
+  .hamburger { display: flex; }
+}
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .main-content { padding: 20px; }
+  .login-card { padding: 32px 24px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .books-toolbar { flex-direction: column; }
+  .search-box { width: 100%; }
+}
+
+/* Section backgrounds alternation */
+.section-alt { background: var(--bg-secondary); }
+
+/* Active sidebar nav backdrop */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 499;
+}
+.sidebar-backdrop.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div class="loading-overlay" id="loading">
+  <div class="spinner"></div>
+  <p style="font-family:var(--font-body);color:var(--text-muted);font-size:0.9rem;">Loading Library System…</p>
+</div>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- ===== MODAL OVERLAY ===== -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#" onclick="showPage('home')" aria-label="Home">
+      <div class="nav-logo" aria-hidden="true">📚</div>
+      <div class="nav-title">
+        <strong>ONLINE LIBRARY</strong>
+        <span>RVR & JC College of Engineering</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#" onclick="showPage('home');return false;">Home</a></li>
+      <li><a href="#" onclick="scrollToFeatures();return false;">Features</a></li>
+      <li><a href="#" onclick="scrollToFooter();return false;">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">🌙</button>
+      <div id="user-info" class="hidden">
+        <span id="user-name-display"></span>
+        <button class="btn btn-sm btn-outline" onclick="logout()" style="padding:5px 14px;font-size:0.78rem;">Logout</button>
+      </div>
+      <button class="btn btn-primary" id="nav-login-btn" onclick="showPage('login')">
+        🔑 Login
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar backdrop (mobile) -->
+<div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebar()"></div>
+
+<!-- ============================================================
+     HOME PAGE
+============================================================ -->
+<div id="page-home" class="page active">
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-bg">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+    </div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-tag">🎓 RVR & JC College of Engineering</div>
+        <h1 id="hero-heading">
+          Your Digital <span class="highlight">Online Library</span> Awaits
+        </h1>
+        <p>Access thousands of books across engineering and general categories. Borrow, explore, and learn — all from one modern platform designed for students and educators.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="showPage('login')">🚀 Get Started</button>
+          <button class="btn btn-outline" onclick="scrollToFeatures()">✨ Explore Features</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><div class="stat-num">500+</div><div class="stat-lbl">Books</div></div>
+          <div class="stat-item"><div class="stat-num">22</div><div class="stat-lbl">Categories</div></div>
+          <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Roles</div></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-card-stack">
+          <div class="hero-card hero-card-1">
+            <div class="hc-genre">Engineering</div>
+            <div class="hc-title">Data Structures & Algorithms</div>
+            <div class="hc-author">Thomas H. Cormen</div>
+          </div>
+          <div class="hero-card hero-card-main">
+            <div class="hc-genre">Computer Science</div>
+            <div class="hc-title">Introduction to the Theory of Computation</div>
+            <div class="hc-author">Michael Sipser</div>
+            <div class="hc-status"><div class="hc-dot"></div> Available</div>
+          </div>
+          <div class="hero-card hero-card-2">
+            <div class="hc-genre">Fiction</div>
+            <div class="hc-title">Dune</div>
+            <div class="hc-author">Frank Herbert</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features-section" aria-labelledby="features-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Why Choose Us</div>
+        <h2 class="section-title" id="features-heading">Everything you need in one place</h2>
+        <p class="section-subtitle">A comprehensive digital library system built for the modern academic environment.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Smart Search</h3>
+          <p>Find any book instantly with our powerful search and filtering system across all categories and authors.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>Easy Borrowing</h3>
+          <p>Borrow books in one click, track your borrowing history, and get notified when books become available.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📂</div>
+          <h3>Rich Categories</h3>
+          <p>Explore 22 categories spanning engineering disciplines and popular fiction genres for every interest.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💻</div>
+          <h3>Digital Access</h3>
+          <p>Access the library from anywhere, anytime, on any device with our fully responsive platform.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>Role-Based Access</h3>
+          <p>Separate dashboards for administrators, teachers, and students with appropriate permissions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Admin Analytics</h3>
+          <p>Comprehensive dashboards for administrators to manage the complete library ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer-section">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>📚 Online Library</h3>
+          <p>RVR & JC College of Engineering's digital library platform — empowering students and educators with knowledge at their fingertips.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>🏠 Home</li>
+            <li>📚 Browse Books</li>
+            <li>🔑 Login</li>
+            <li>💡 Features</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li>📍 Chowdavaram, Guntur, AP — 522019</li>
+            <li>📞 +91 863 254 5678</li>
+            <li>✉️ library@rvrjc.ac.in</li>
+            <li>🌐 www.rvrjc.ac.in</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 RVR & JC College of Engineering — Online Library Management System. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     LOGIN PAGE
+============================================================ -->
+<div id="page-login" class="page">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-icon">📚</div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to your library account</p>
+      </div>
+      <!-- Role Tabs -->
+      <div class="role-tabs" role="tablist">
+        <button class="role-tab active" role="tab" aria-selected="true" onclick="selectRole('admin', this)">👔 Admin</button>
+        <button class="role-tab" role="tab" aria-selected="false" onclick="selectRole('teacher', this)">👩‍🏫 Teacher</button>
+        <button class="role-tab" role="tab" aria-selected="false" onclick="selectRole('student', this)">🎓 Student</button>
+      </div>
+      <!-- Form -->
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="login-email">Email / Username</label>
+          <input type="text" id="login-email" placeholder="Enter your email" autocomplete="username" required/>
+          <div class="form-error" id="email-error">Please enter a valid email.</div>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" required/>
+          <div class="form-error" id="pass-error">Incorrect password.</div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;">
+          Sign In →
+        </button>
+      </form>
+      <div class="login-hints">
+        <strong>Demo Credentials:</strong>
+        <div>👔 Admin: admin@rvrjc.ac.in / admin123</div>
+        <div>👩‍🏫 Teacher: teacher@rvrjc.ac.in / teacher123</div>
+        <div>🎓 Student: student@rvrjc.ac.in / student123</div>
+      </div>
+      <div class="login-footer">
+        <a href="#" onclick="showPage('home');return false;" style="color:var(--accent);">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     STUDENT DASHBOARD
+============================================================ -->
+<div id="page-student" class="page dashboard-page">
+  <aside class="sidebar" id="student-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-role">Student</div>
+      <div class="sidebar-user-name" id="student-name">Student User</div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-section-label">Main</li>
+      <li><a href="#" class="active" data-view="student-home" onclick="switchView(this,'student')"><span class="icon">🏠</span> Dashboard</a></li>
+      <li><a href="#" data-view="student-books" onclick="switchView(this,'student')"><span class="icon">📚</span> Browse Books</a></li>
+      <li><a href="#" data-view="student-borrowed" onclick="switchView(this,'student')"><span class="icon">📋</span> My Borrowed</a></li>
+      <li class="sidebar-section-label">Account</li>
+      <li><a href="#" onclick="logout()"><span class="icon">🚪</span> Logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content" id="student-main">
+    <!-- Student views injected here -->
+  </main>
+</div>
+
+<!-- ============================================================
+     TEACHER DASHBOARD
+============================================================ -->
+<div id="page-teacher" class="page dashboard-page">
+  <aside class="sidebar" id="teacher-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-role">Teacher</div>
+      <div class="sidebar-user-name" id="teacher-name">Teacher User</div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-section-label">Main</li>
+      <li><a href="#" class="active" data-view="teacher-home" onclick="switchView(this,'teacher')"><span class="icon">🏠</span> Dashboard</a></li>
+      <li><a href="#" data-view="teacher-books" onclick="switchView(this,'teacher')"><span class="icon">📚</span> Browse Books</a></li>
+      <li><a href="#" data-view="teacher-borrowed" onclick="switchView(this,'teacher')"><span class="icon">📋</span> Borrowing History</a></li>
+      <li><a href="#" data-view="teacher-recommend" onclick="switchView(this,'teacher')"><span class="icon">⭐</span> Recommend Books</a></li>
+      <li class="sidebar-section-label">Account</li>
+      <li><a href="#" onclick="logout()"><span class="icon">🚪</span> Logout</a></li>
+    </ul>
+  </aside>
+  <main class="main-content" id="teacher-main"></main>
+</div>
+
+<!-- ============================================================
+     ADMIN DASHBOARD
+============================================================ -->
+<div id="page-admin" class="page dashboard-page">
+  <aside class="sidebar" id="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-role">Administrator</div>
+      <div class="sidebar-user-name">Library Admin</div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-section-label">Overview</li>
+      <li><a href="#" class="active" data-view="admin-home" onclick="switchView(this,'admin')"><span class="icon">📊</span> Dashboard</a></li>
+      <li class="sidebar-section-label">Books</li>
+      <li><a href="#" data-view="admin-books" onclick="switchView(this,'admin')"><span class="icon">📚</span> Manage Books</a></li>
+      <li><a href="#" data-view="admin-borrowed" onclick="switchView(this,'admin')"><span class="icon">📋</span> Borrowed Books</a></li>
+      <li class="sidebar-section-label">Users</li>
+      <li><a href="#" data-view="admin-users" onclick="switchView(this,'admin')"><span class="icon">👥</span> Manage Users</a></li>
+      <li class="sidebar-section-label">Account</li>
+      <li><a href="#" onclick="logout()"><span class="icon">🚪</span> Logout</a></li>
+    </ul>
+  </aside>
+  <main class="main-content" id="admin-main"></main>
+</div>
+
+<script>
+/* ============================================================
+   LIBRARY MANAGEMENT SYSTEM — JavaScript
+   Author: Library System
+============================================================ */
+
+// ============================================================
+// DATA
+// ============================================================
+
+// Initial credentials stored in localStorage
+const CREDENTIALS = {
+  admin: { email: 'admin@rvrjc.ac.in', password: 'admin123', name: 'Library Admin' },
+  teacher: { email: 'teacher@rvrjc.ac.in', password: 'teacher123', name: 'Dr. Ramesh Kumar' },
+  student: { email: 'student@rvrjc.ac.in', password: 'student123', name: 'Priya Sharma' }
+};
+
+// ─── Engineering Book Data ────────────────────────────────
+const BOOKS_DATA = [
+  // Civil Engineering
+  ...createBooks('Civil Engineering', '🏗️', [
+    ['Structural Analysis', 'R.C. Hibbeler', 2020, 650],
+    ['Reinforced Concrete Design', 'Wai-Fah Chen', 2018, 700],
+    ['Foundation Engineering', 'Braja M. Das', 2019, 580],
+    ['Fluid Mechanics', 'Frank M. White', 2021, 620],
+    ['Highway Engineering', 'S.K. Khanna', 2017, 490],
+    ['Environmental Engineering', 'Howard S. Peavy', 2016, 540],
+    ['Steel Structures', 'L.S. Negi', 2018, 560],
+    ['Soil Mechanics', 'K.R. Arora', 2020, 470],
+    ['Building Construction', 'B.C. Punmia', 2017, 440],
+    ['Irrigation Engineering', 'R.K. Sharma', 2019, 380],
+    ['Transportation Engineering', 'C.S. Papacostas', 2018, 500],
+    ['Water Supply Engineering', 'P.N. Modi', 2016, 430],
+    ['Concrete Technology', 'M.S. Shetty', 2020, 520],
+    ['Geotechnical Engineering', 'Donald P. Coduto', 2019, 590],
+    ['Bridge Engineering', 'Demetrios Tonias', 2017, 620],
+    ['Prestressed Concrete', 'Krishna Raju', 2018, 480],
+    ['Estimating & Costing', 'B.N. Dutta', 2016, 360],
+    ['Hydraulics & Fluid Mechanics', 'P.N. Modi', 2021, 520],
+    ['Building Materials', 'S.K. Duggal', 2019, 410],
+    ['Survey Engineering', 'B.C. Punmia', 2018, 460],
+  ]),
+  // Computer Science
+  ...createBooks('Computer Science and Engineering', '💻', [
+    ['Introduction to Algorithms', 'Thomas H. Cormen', 2022, 890],
+    ['Computer Networks', 'Andrew S. Tanenbaum', 2021, 750],
+    ['Operating System Concepts', 'Abraham Silberschatz', 2020, 700],
+    ['Database System Concepts', 'Henry F. Korth', 2021, 680],
+    ['Compiler Design', 'Alfred V. Aho', 2019, 720],
+    ['Software Engineering', 'Ian Sommerville', 2020, 640],
+    ['Computer Organization', 'Carl Hamacher', 2018, 660],
+    ['Discrete Mathematics', 'Kenneth H. Rosen', 2021, 720],
+    ['Artificial Intelligence', 'Stuart Russell', 2020, 850],
+    ['Design Patterns', 'Gang of Four', 2019, 580],
+    ['Clean Code', 'Robert C. Martin', 2018, 450],
+    ['The Pragmatic Programmer', 'David Thomas', 2019, 490],
+    ['Computer Graphics', 'Donald Hearn', 2019, 680],
+    ['Theory of Computation', 'Michael Sipser', 2020, 620],
+    ['Data Communications', 'Forouzan', 2021, 700],
+    ['Web Technologies', 'Chris Bates', 2019, 510],
+    ['Object-Oriented Programming', 'James Rumbaugh', 2018, 590],
+    ['System Analysis & Design', 'Dennis Wixom', 2020, 540],
+    ['Cloud Computing', 'Rajkumar Buyya', 2019, 560],
+    ['Cyber Security', 'William Stallings', 2021, 670],
+  ]),
+  // Mechanical Engineering
+  ...createBooks('Mechanical Engineering', '⚙️', [
+    ['Engineering Thermodynamics', 'P.K. Nag', 2021, 620],
+    ['Machine Design', 'V.B. Bhandari', 2020, 680],
+    ['Theory of Machines', 'S.S. Rattan', 2019, 590],
+    ['Fluid Mechanics & Machinery', 'C.S.P. Ojha', 2020, 560],
+    ['Manufacturing Engineering', 'Kalpakjian', 2021, 730],
+    ['Heat & Mass Transfer', 'J.P. Holman', 2020, 650],
+    ['Strength of Materials', 'R.K. Bansal', 2019, 540],
+    ['Engineering Mechanics', 'S.S. Bhavikatti', 2018, 500],
+    ['Refrigeration & Air Conditioning', 'R.S. Khurmi', 2020, 480],
+    ['Automobile Engineering', 'Kirpal Singh', 2019, 520],
+    ['CNC Programming', 'Mike Lynch', 2018, 440],
+    ['Robotics & Automation', 'John J. Craig', 2021, 580],
+    ['Tribology in Industry', 'Stachowiak', 2019, 460],
+    ['Metrology & Instrumentation', 'R.K. Jain', 2020, 490],
+    ['Production Technology', 'R.K. Jain', 2018, 510],
+    ['Turbomachinery', 'B.K. Venkanna', 2019, 530],
+    ['Engineering Materials', 'Callister', 2021, 640],
+    ['Control Systems', 'K. Ogata', 2020, 590],
+    ['Finite Element Analysis', 'Krishnamoorthy', 2019, 560],
+    ['HVAC Design', 'Roger Legg', 2018, 470],
+  ]),
+  // Electrical Engineering
+  ...createBooks('Electrical Engineering', '⚡', [
+    ['Power Systems Analysis', 'Stevenson', 2020, 680],
+    ['Electrical Machines', 'P.S. Bimbhra', 2021, 720],
+    ['Control Systems Engineering', 'Nise', 2020, 640],
+    ['Electric Circuits', 'Nilsson & Riedel', 2021, 700],
+    ['Power Electronics', 'M.H. Rashid', 2020, 680],
+    ['Electromagnetic Fields', 'Sadiku', 2019, 620],
+    ['Signals & Systems', 'Oppenheim', 2020, 640],
+    ['Digital Electronics', 'Morris Mano', 2021, 560],
+    ['Electrical Measurements', 'Golding', 2018, 490],
+    ['Switchgear & Protection', 'Sunil S. Rao', 2019, 530],
+    ['High Voltage Engineering', 'M.S. Naidu', 2020, 550],
+    ['Renewable Energy Systems', 'Tiwari', 2019, 520],
+    ['Utilization of Electrical Energy', 'Taylor', 2018, 440],
+    ['Electrical Wiring', 'Surjit Singh', 2019, 380],
+    ['PLC & SCADA', 'Gary Dunning', 2020, 490],
+    ['Smart Grid Technology', 'Clark Gellings', 2021, 560],
+    ['Electric Drives', 'A. Dubey', 2019, 510],
+    ['Industrial Electronics', 'Lister', 2018, 470],
+    ['Distributed Generation', 'Jenkins', 2020, 490],
+    ['Energy Audit', 'Thumann', 2019, 440],
+  ]),
+  // ECE
+  ...createBooks('Electronics and Communication Engineering', '📡', [
+    ['Electronic Devices & Circuits', 'Boylestad', 2021, 680],
+    ['Digital Signal Processing', 'Proakis', 2020, 720],
+    ['Communication Systems', 'Haykin', 2021, 700],
+    ['Analog & Digital Communications', 'Haykin', 2019, 660],
+    ['VLSI Design', 'Neil Weste', 2020, 640],
+    ['Microprocessors & Microcontrollers', 'Ramesh Gaonkar', 2021, 620],
+    ['Antenna & Wave Propagation', 'K.D. Prasad', 2020, 580],
+    ['Embedded Systems', 'Raj Kamal', 2021, 560],
+    ['RF & Microwave Engineering', 'Pozar', 2019, 640],
+    ['Fiber Optic Communications', 'Keiser', 2020, 580],
+    ['Optical Networks', 'Ramaswami', 2019, 560],
+    ['Satellite Communication', 'Pratt', 2020, 540],
+    ['Digital Image Processing', 'Gonzalez', 2021, 680],
+    ['Neural Networks', 'Haykin', 2019, 640],
+    ['Biomedical Electronics', 'Khandpur', 2018, 520],
+    ['IC Technology', 'Ghandi', 2019, 490],
+    ['Electronic Measurements', 'Helfrick', 2020, 470],
+    ['Radar Systems', 'Skolnik', 2019, 580],
+    ['Mobile Communications', 'Jochen Schiller', 2020, 520],
+    ['5G Networks', 'Lahetkangas', 2021, 560],
+  ]),
+  // Information Technology
+  ...createBooks('Information Technology', '🖥️', [
+    ['Information Technology Essentials', 'Brian Williams', 2021, 580],
+    ['Cloud Architecture Patterns', 'Bill Wilder', 2020, 520],
+    ['DevOps Handbook', 'Gene Kim', 2021, 560],
+    ['Agile Project Management', 'Jim Highsmith', 2019, 490],
+    ['Network Security Essentials', 'Stallings', 2021, 640],
+    ['Big Data Analytics', 'Thomas Erl', 2020, 600],
+    ['Machine Learning', 'Tom Mitchell', 2021, 680],
+    ['Python Programming', 'Mark Lutz', 2020, 540],
+    ['Java: Complete Reference', 'Herbert Schildt', 2021, 720],
+    ['Blockchain Basics', 'Daniel Drescher', 2019, 440],
+    ['IoT: Internet of Things', 'Raj Kamal', 2021, 520],
+    ['Docker & Kubernetes', 'Joe Beda', 2020, 490],
+    ['React.js Essentials', 'Artemij Fedosejev', 2021, 460],
+    ['Data Science Handbook', 'Jake VanderPlas', 2020, 580],
+    ['Ethical Hacking', 'EC-Council', 2021, 540],
+    ['ERP Systems', 'Thomas F. Wallace', 2019, 480],
+    ['E-Commerce Strategy', 'Dave Chaffey', 2021, 510],
+    ['SEO Fundamentals', 'Eric Enge', 2020, 430],
+    ['UX Design Thinking', 'Don Norman', 2019, 480],
+    ['Project Management', 'Harold Kerzner', 2021, 620],
+  ]),
+  // AI & ML
+  ...createBooks('Artificial Intelligence and Machine Learning', '🤖', [
+    ['Deep Learning', 'Ian Goodfellow', 2021, 850],
+    ['Hands-On Machine Learning', 'Aurélien Géron', 2022, 790],
+    ['Pattern Recognition', 'Bishop', 2020, 760],
+    ['Reinforcement Learning', 'Sutton & Barto', 2021, 720],
+    ['Natural Language Processing', 'Jurafsky', 2020, 700],
+    ['Computer Vision', 'Szeliski', 2021, 740],
+    ['Probabilistic Graphical Models', 'Koller', 2020, 780],
+    ['Neural Networks', 'Michael Nielsen', 2019, 580],
+    ['AI Ethics', 'Mark Coeckelbergh', 2020, 490],
+    ['Data Science from Scratch', 'Joel Grus', 2021, 540],
+    ['TensorFlow Deep Learning', 'Antonio Gulli', 2021, 620],
+    ['PyTorch Recipes', 'Pradeepta Mishra', 2021, 560],
+    ['Generative Adversarial Networks', 'Jakub Langr', 2020, 590],
+    ['Explainable AI', 'Christoph Molnar', 2021, 510],
+    ['Feature Engineering', 'Alice Zheng', 2020, 480],
+    ['Statistics for Machine Learning', 'Jason Brownlee', 2021, 520],
+    ['AI Superpowers', 'Kai-Fu Lee', 2019, 450],
+    ['The Master Algorithm', 'Pedro Domingos', 2018, 440],
+    ['Applied Machine Learning', 'David Forsyth', 2021, 680],
+    ['Federated Learning', 'Qiang Yang', 2020, 540],
+  ]),
+  // Chemical Engineering
+  ...createBooks('Chemical Engineering', '🧪', [
+    ['Chemical Reaction Engineering', 'Octave Levenspiel', 2021, 680],
+    ['Mass Transfer Operations', 'Treybal', 2020, 720],
+    ['Heat Transfer', 'Cengel', 2021, 660],
+    ['Fluid Mechanics for Engineers', 'Stokes', 2019, 580],
+    ['Process Dynamics & Control', 'Seborg', 2020, 640],
+    ['Chemical Engineering Design', 'Towler', 2021, 700],
+    ['Transport Phenomena', 'Bird', 2020, 760],
+    ['Unit Operations', 'McCabe', 2021, 720],
+    ['Chemical Thermodynamics', 'Balzhiser', 2019, 620],
+    ['Petrochemical Technology', 'Austin', 2020, 580],
+    ['Polymer Science', 'Billmeyer', 2019, 540],
+    ['Biochemical Engineering', 'Bailey', 2020, 560],
+    ['Safety in Chemical Plants', 'Crowl', 2021, 490],
+    ['Environmental Engineering', 'Peavy', 2019, 520],
+    ['Corrosion Engineering', 'Fontana', 2020, 480],
+    ['Pharmaceutical Engineering', 'Shayne', 2019, 510],
+    ['Food Process Engineering', 'Heldman', 2020, 470],
+    ['Nanotechnology', 'Gabor Forgacs', 2021, 520],
+    ['Separation Processes', 'King', 2020, 560],
+    ['Plant Design', 'Peter Timmerhaus', 2019, 600],
+  ]),
+  // Biotechnology
+  ...createBooks('Biotechnology', '🧬', [
+    ['Molecular Biology', 'Weaver', 2021, 740],
+    ['Biochemistry', 'Stryer', 2021, 780],
+    ['Cell Biology', 'Alberts', 2020, 720],
+    ['Genetics', 'Griffiths', 2021, 680],
+    ['Microbiology', 'Tortora', 2020, 640],
+    ['Bioinformatics', 'Mount', 2021, 620],
+    ['Bioprocess Engineering', 'Shuler', 2020, 640],
+    ['Immunology', 'Paul', 2021, 700],
+    ['Genomics', 'Brown', 2019, 580],
+    ['Proteomics', 'Liebler', 2020, 540],
+    ['Stem Cell Biology', 'Bhanu', 2021, 520],
+    ['Cancer Biology', 'Weinberg', 2020, 680],
+    ['Agricultural Biotechnology', 'Acquaah', 2021, 560],
+    ['Fermentation Technology', 'McNeil', 2019, 490],
+    ['Biosensors', 'Cooper', 2020, 470],
+    ['Gene Therapy', 'Linden', 2021, 510],
+    ['Environmental Biotechnology', 'Evans', 2019, 480],
+    ['Marine Biotechnology', 'Bhadury', 2020, 440],
+    ['Enzyme Technology', 'Bickerstaff', 2021, 460],
+    ['Industrial Microbiology', 'Crueger', 2019, 490],
+  ]),
+  // Aerospace
+  ...createBooks('Aerospace Engineering', '🚀', [
+    ['Aerodynamics', 'John Anderson', 2021, 750],
+    ['Jet Propulsion', 'Hill & Peterson', 2020, 680],
+    ['Flight Dynamics', 'Bernard Etkin', 2019, 640],
+    ['Spacecraft Attitude Dynamics', 'Wertz', 2021, 720],
+    ['Orbital Mechanics', 'Battin', 2020, 680],
+    ['Aircraft Design', 'Raymer', 2021, 760],
+    ['Helicopter Aerodynamics', 'Prouty', 2019, 580],
+    ['Avionics Systems', 'Collinson', 2020, 620],
+    ['Structural Analysis Aircraft', 'Megson', 2021, 640],
+    ['Gas Dynamics', 'Anderson', 2020, 660],
+    ['Rocket Propulsion Elements', 'Sutton', 2021, 720],
+    ['Satellite Engineering', 'Fortescue', 2019, 640],
+    ['Aeroelasticity', 'Fung', 2020, 600],
+    ['Air Traffic Control', 'Nolan', 2021, 560],
+    ['Composite Structures', 'Jones', 2019, 580],
+    ['Spacecraft Design', 'Griffin', 2020, 700],
+    ['Navigation Systems', 'Britting', 2021, 620],
+    ['Aircraft Systems', 'Fielding', 2019, 540],
+    ['Space Mission Engineering', 'Wertz', 2021, 740],
+    ['High Speed Aerodynamics', 'Ashley', 2020, 620],
+  ]),
+  // Mechatronics
+  ...createBooks('Mechatronics', '🔧', [
+    ['Mechatronics', 'W. Bolton', 2021, 580],
+    ['Sensors & Actuators', 'Doebelin', 2020, 560],
+    ['Microcontroller Applications', 'David Calcutt', 2021, 520],
+    ['PLC Programming', 'Jon Stenerson', 2020, 490],
+    ['Robotics', 'Bruno Siciliano', 2021, 620],
+    ['Embedded Control Systems', 'Armstrong-Hélouvry', 2019, 540],
+    ['Motion Control Systems', 'Otten', 2020, 510],
+    ['Industrial Automation', 'Rehg', 2021, 530],
+    ['Smart Manufacturing', 'Davis', 2020, 480],
+    ['CNC Programming', 'Smid', 2021, 460],
+    ['Hydraulics & Pneumatics', 'Andrew Parr', 2019, 490],
+    ['CAD/CAM Systems', 'Zeid', 2020, 510],
+    ['3D Printing Technology', 'Gebhardt', 2021, 470],
+    ['Machine Vision', 'Jain', 2019, 530],
+    ['Industrial Robotics', 'Groover', 2021, 570],
+    ['Signal Processing for Control', 'Roberts', 2020, 500],
+    ['Mechanical Design', 'Shigley', 2021, 640],
+    ['Precision Engineering', 'McKeown', 2019, 480],
+    ['Digital Control Systems', 'Franklin', 2020, 540],
+    ['Intelligent Systems', 'Kevin M. Passino', 2021, 520],
+  ]),
+  // Robotics
+  ...createBooks('Robotics and Automation', '🦾', [
+    ['Modern Robotics', 'Lynch', 2021, 640],
+    ['Robot Modeling & Control', 'Spong', 2020, 620],
+    ['Probabilistic Robotics', 'Thrun', 2021, 700],
+    ['Autonomous Mobile Robots', 'Siegwart', 2020, 660],
+    ['Robot Programming', 'Groover', 2021, 580],
+    ['Computer Vision for Robots', 'Horn', 2019, 620],
+    ['Machine Learning for Robots', 'Peters', 2021, 640],
+    ['Human-Robot Interaction', 'Goodrich', 2020, 560],
+    ['Swarm Robotics', 'Dorigo', 2021, 580],
+    ['Medical Robotics', 'Troccaz', 2020, 620],
+    ['Drone Technology', 'Valavanis', 2021, 560],
+    ['Soft Robotics', 'Kim', 2020, 520],
+    ['SLAM for Mobile Robots', 'Dissanayake', 2021, 580],
+    ['Manipulation Algorithms', 'Choset', 2020, 600],
+    ['Exoskeleton Technology', 'del-Ama', 2021, 540],
+    ['Underwater Robotics', 'Christ', 2019, 510],
+    ['Space Robotics', 'Ellery', 2020, 580],
+    ['Microrobotics', 'Behkam', 2021, 490],
+    ['Robot Ethics', 'Wallach', 2019, 440],
+    ['Industrial Automation', 'Asfahl', 2020, 560],
+  ]),
+
+  // ─── General Categories ───────────────────────────────
+  ...createBooks('Fantasy', '🧙', [
+    ['The Name of the Wind', 'Patrick Rothfuss', 2007, 420],
+    ['A Wizard of Earthsea', 'Ursula K. Le Guin', 1968, 280],
+    ['The Way of Kings', 'Brandon Sanderson', 2010, 620],
+    ['Mistborn: The Final Empire', 'Brandon Sanderson', 2006, 540],
+    ['The Hobbit', 'J.R.R. Tolkien', 1937, 320],
+    ['The Fellowship of the Ring', 'J.R.R. Tolkien', 1954, 480],
+    ['Harry Potter & Sorcerer\'s Stone', 'J.K. Rowling', 1997, 340],
+    ['American Gods', 'Neil Gaiman', 2001, 560],
+    ['The Lies of Locke Lamora', 'Scott Lynch', 2006, 500],
+    ['A Game of Thrones', 'George R.R. Martin', 1996, 720],
+    ['The Night Circus', 'Erin Morgenstern', 2011, 400],
+    ['Uprooted', 'Naomi Novik', 2015, 380],
+    ['The First Law', 'Joe Abercrombie', 2006, 520],
+    ['Words of Radiance', 'Brandon Sanderson', 2014, 680],
+    ['The Fifth Season', 'N.K. Jemisin', 2015, 420],
+    ['Assassin\'s Apprentice', 'Robin Hobb', 1995, 400],
+    ['Elantris', 'Brandon Sanderson', 2005, 360],
+    ['The Priory of the Orange Tree', 'Samantha Shannon', 2019, 800],
+    ['The Black Company', 'Glen Cook', 1984, 320],
+    ['Gardens of the Moon', 'Steven Erikson', 1999, 720],
+  ]),
+  ...createBooks('Science Fiction', '🚀', [
+    ['Dune', 'Frank Herbert', 1965, 420],
+    ['Foundation', 'Isaac Asimov', 1951, 360],
+    ['Neuromancer', 'William Gibson', 1984, 320],
+    ['The Martian', 'Andy Weir', 2011, 380],
+    ['Ender\'s Game', 'Orson Scott Card', 1985, 320],
+    ['1984', 'George Orwell', 1949, 340],
+    ['Brave New World', 'Aldous Huxley', 1932, 320],
+    ['Fahrenheit 451', 'Ray Bradbury', 1953, 256],
+    ['The Left Hand of Darkness', 'Ursula K. Le Guin', 1969, 300],
+    ['Hyperion', 'Dan Simmons', 1989, 482],
+    ['The Road', 'Cormac McCarthy', 2006, 320],
+    ['Snow Crash', 'Neal Stephenson', 1992, 480],
+    ['All Systems Red', 'Martha Wells', 2017, 200],
+    ['A Fire Upon the Deep', 'Vernor Vinge', 1992, 450],
+    ['The Stars Are Legion', 'Kameron Hurley', 2017, 360],
+    ['Children of Time', 'Adrian Tchaikovsky', 2015, 560],
+    ['Project Hail Mary', 'Andy Weir', 2021, 476],
+    ['Old Man\'s War', 'John Scalzi', 2005, 350],
+    ['Blindsight', 'Peter Watts', 2006, 384],
+    ['A Long Way to a Small Angry Planet', 'Becky Chambers', 2014, 400],
+  ]),
+  ...createBooks('Mystery', '🔍', [
+    ['Gone Girl', 'Gillian Flynn', 2012, 440],
+    ['The Girl with the Dragon Tattoo', 'Stieg Larsson', 2005, 600],
+    ['And Then There Were None', 'Agatha Christie', 1939, 272],
+    ['The Big Sleep', 'Raymond Chandler', 1939, 288],
+    ['In the Woods', 'Tana French', 2007, 464],
+    ['The Name of the Rose', 'Umberto Eco', 1980, 540],
+    ['Big Little Lies', 'Liane Moriarty', 2014, 460],
+    ['Sharp Objects', 'Gillian Flynn', 2006, 256],
+    ['The Silent Patient', 'Alex Michaelides', 2019, 368],
+    ['Murder on the Orient Express', 'Agatha Christie', 1934, 272],
+    ['The Woman in White', 'Wilkie Collins', 1859, 672],
+    ['Faithful Place', 'Tana French', 2010, 400],
+    ['The Seven Deaths', 'James Prichard', 2020, 352],
+    ['The Hound of the Baskervilles', 'Arthur Conan Doyle', 1902, 256],
+    ['Broken Harbor', 'Tana French', 2012, 464],
+    ['The Cuckoo\'s Calling', 'Robert Galbraith', 2013, 560],
+    ['Dark Places', 'Gillian Flynn', 2009, 352],
+    ['The Thursday Murder Club', 'Richard Osman', 2020, 400],
+    ['Knives Out', 'Rian Johnson', 2019, 280],
+    ['A Study in Scarlet', 'Arthur Conan Doyle', 1887, 184],
+  ]),
+  ...createBooks('Thriller', '😱', [
+    ['The Girl on the Train', 'Paula Hawkins', 2015, 320],
+    ['Silence of the Lambs', 'Thomas Harris', 1988, 338],
+    ['The Da Vinci Code', 'Dan Brown', 2003, 492],
+    ['Gone Girl', 'Gillian Flynn', 2012, 440],
+    ['I Am Pilgrim', 'Terry Hayes', 2013, 736],
+    ['The Firm', 'John Grisham', 1991, 432],
+    ['The Pelican Brief', 'John Grisham', 1992, 432],
+    ['Behind Closed Doors', 'B.A. Paris', 2016, 352],
+    ['The Woman in the Window', 'A.J. Finn', 2018, 448],
+    ['Alex Cross', 'James Patterson', 1993, 384],
+    ['Mr. Mercedes', 'Stephen King', 2014, 464],
+    ['The Couple Next Door', 'Shari Lapena', 2016, 304],
+    ['1408', 'Stephen King', 1999, 288],
+    ['The Matarese Circle', 'Robert Ludlum', 1979, 600],
+    ['Shutter Island', 'Dennis Lehane', 2003, 384],
+    ['In a Dark, Dark Wood', 'Ruth Ware', 2015, 336],
+    ['The Chemist', 'Stephenie Meyer', 2016, 528],
+    ['Run Rose Run', 'Dolly Parton', 2022, 400],
+    ['The Sentinel', 'Lee Child', 2020, 352],
+    ['The House in the Cerulean Sea', 'TJ Klune', 2020, 400],
+  ]),
+  ...createBooks('Romance', '💕', [
+    ['Pride and Prejudice', 'Jane Austen', 1813, 432],
+    ['Me Before You', 'Jojo Moyes', 2012, 369],
+    ['The Notebook', 'Nicholas Sparks', 1996, 214],
+    ['Outlander', 'Diana Gabaldon', 1991, 850],
+    ['The Fault in Our Stars', 'John Green', 2012, 313],
+    ['It Ends with Us', 'Colleen Hoover', 2016, 368],
+    ['Beach Read', 'Emily Henry', 2020, 336],
+    ['The Hating Game', 'Sally Thorne', 2016, 384],
+    ['Normal People', 'Sally Rooney', 2018, 288],
+    ['The Kiss Quotient', 'Helen Hoang', 2018, 336],
+    ['Twilight', 'Stephenie Meyer', 2005, 498],
+    ['Jane Eyre', 'Charlotte Brontë', 1847, 532],
+    ['Sense and Sensibility', 'Jane Austen', 1811, 374],
+    ['The Rosie Project', 'Graeme Simsion', 2013, 312],
+    ['Eleanor & Park', 'Rainbow Rowell', 2013, 336],
+    ['A Court of Thorns and Roses', 'Sarah J. Maas', 2015, 432],
+    ['People We Meet on Vacation', 'Emily Henry', 2021, 384],
+    ['The Love Hypothesis', 'Ali Hazelwood', 2021, 384],
+    ['Things We Never Got Over', 'Lucy Score', 2022, 480],
+    ['Ugly Love', 'Colleen Hoover', 2014, 332],
+  ]),
+  ...createBooks('Action/Adventure', '⚔️', [
+    ['The Count of Monte Cristo', 'Alexandre Dumas', 1844, 1276],
+    ['Robinson Crusoe', 'Daniel Defoe', 1719, 320],
+    ['Treasure Island', 'Robert Louis Stevenson', 1883, 292],
+    ['The Three Musketeers', 'Alexandre Dumas', 1844, 700],
+    ['Jurassic Park', 'Michael Crichton', 1990, 399],
+    ['Congo', 'Michael Crichton', 1980, 368],
+    ['Into Thin Air', 'Jon Krakauer', 1997, 368],
+    ['Papillon', 'Henri Charrière', 1969, 560],
+    ['The Alchemist', 'Paulo Coelho', 1988, 208],
+    ['Life of Pi', 'Yann Martel', 2001, 428],
+    ['Bourne Identity', 'Robert Ludlum', 1980, 528],
+    ['Jack Ryan Series', 'Tom Clancy', 1984, 672],
+    ['The Last Kingdom', 'Bernard Cornwell', 2004, 320],
+    ['Shogun', 'James Clavell', 1975, 1152],
+    ['Pillars of the Earth', 'Ken Follett', 1989, 976],
+    ['Unbroken', 'Laura Hillenbrand', 2010, 496],
+    ['Into the Wild', 'Jon Krakauer', 1996, 224],
+    ['The Long Walk', 'Stephen King', 1979, 384],
+    ['The Girl Who Played with Fire', 'Stieg Larsson', 2006, 630],
+    ['Inca Gold', 'Clive Cussler', 1994, 540],
+  ]),
+  ...createBooks('Horror', '👻', [
+    ['The Shining', 'Stephen King', 1977, 447],
+    ['It', 'Stephen King', 1986, 1138],
+    ['Dracula', 'Bram Stoker', 1897, 418],
+    ['Frankenstein', 'Mary Shelley', 1818, 280],
+    ['House of Leaves', 'Mark Z. Danielewski', 2000, 709],
+    ['Bird Box', 'Josh Malerman', 2014, 262],
+    ['The Haunting of Hill House', 'Shirley Jackson', 1959, 246],
+    ['Pet Sematary', 'Stephen King', 1983, 374],
+    ['American Psycho', 'Bret Easton Ellis', 1991, 399],
+    ['A Head Full of Ghosts', 'Paul Tremblay', 2015, 304],
+    ['The Hellbound Heart', 'Clive Barker', 1986, 160],
+    ['Mexican Gothic', 'Silvia Moreno-Garcia', 2020, 320],
+    ['Slade House', 'David Mitchell', 2015, 256],
+    ['The Terror', 'Dan Simmons', 2007, 769],
+    ['We Have Always Lived in Castle', 'Shirley Jackson', 1962, 214],
+    ['My Heart is a Chainsaw', 'Stephen Graham Jones', 2021, 448],
+    ['The Silent Companions', 'Laura Purcell', 2017, 368],
+    ['Tender is the Flesh', 'Agustina Bazterrica', 2017, 224],
+    ['Things Have Gotten Worse Since We Last Spoke', 'Eric LaRocca', 2021, 160],
+    ['The Vegetarian', 'Han Kang', 2007, 188],
+  ]),
+  ...createBooks('Biography', '📖', [
+    ['Steve Jobs', 'Walter Isaacson', 2011, 630],
+    ['Becoming', 'Michelle Obama', 2018, 426],
+    ['Long Walk to Freedom', 'Nelson Mandela', 1994, 656],
+    ['The Diary of Anne Frank', 'Anne Frank', 1947, 283],
+    ['Elon Musk', 'Walter Isaacson', 2023, 688],
+    ['I Am Malala', 'Malala Yousafzai', 2013, 327],
+    ['Wings of Fire', 'A.P.J. Abdul Kalam', 1999, 196],
+    ['Leonardo da Vinci', 'Walter Isaacson', 2017, 624],
+    ['Alexander Hamilton', 'Ron Chernow', 2004, 832],
+    ['Churchill', 'Andrew Roberts', 2018, 1152],
+    ['Titan: John D. Rockefeller', 'Ron Chernow', 1998, 832],
+    ['The Wright Brothers', 'David McCullough', 2015, 336],
+    ['Einstein: His Life', 'Walter Isaacson', 2007, 704],
+    ['Grant', 'Ron Chernow', 2017, 1074],
+    ['Margaret Thatcher', 'John Campbell', 2000, 592],
+    ['Alan Turing Enigma', 'Andrew Hodges', 1983, 544],
+    ['What It Takes', 'Stephen Schwarzman', 2019, 368],
+    ['Shoe Dog', 'Phil Knight', 2016, 400],
+    ['Benjamin Franklin', 'Walter Isaacson', 2003, 590],
+    ['My Experiments with Truth', 'M.K. Gandhi', 1927, 548],
+  ]),
+  ...createBooks('Self-Help', '💪', [
+    ['Atomic Habits', 'James Clear', 2018, 320],
+    ['Think and Grow Rich', 'Napoleon Hill', 1937, 320],
+    ['The 7 Habits of Highly Effective People', 'Stephen Covey', 1989, 464],
+    ['How to Win Friends and Influence People', 'Dale Carnegie', 1936, 288],
+    ['The Power of Now', 'Eckhart Tolle', 1997, 236],
+    ['Mindset', 'Carol Dweck', 2006, 256],
+    ['Deep Work', 'Cal Newport', 2016, 304],
+    ['The Subtle Art of Not Giving a F*ck', 'Mark Manson', 2016, 224],
+    ['Start with Why', 'Simon Sinek', 2009, 256],
+    ['Grit', 'Angela Duckworth', 2016, 352],
+    ['The One Thing', 'Gary Keller', 2013, 288],
+    ['Essentialism', 'Greg McKeown', 2014, 272],
+    ['Man\'s Search for Meaning', 'Viktor Frankl', 1946, 200],
+    ['Rich Dad Poor Dad', 'Robert Kiyosaki', 1997, 336],
+    ['The Magic of Thinking Big', 'David Schwartz', 1959, 320],
+    ['Getting Things Done', 'David Allen', 2001, 352],
+    ['The 4-Hour Workweek', 'Tim Ferriss', 2007, 416],
+    ['Outliers', 'Malcolm Gladwell', 2008, 336],
+    ['Tipping Point', 'Malcolm Gladwell', 2000, 304],
+    ['Can\'t Hurt Me', 'David Goggins', 2018, 364],
+  ]),
+  ...createBooks('History', '📜', [
+    ['Sapiens', 'Yuval Noah Harari', 2011, 443],
+    ['Homo Deus', 'Yuval Noah Harari', 2015, 450],
+    ['Guns, Germs & Steel', 'Jared Diamond', 1997, 480],
+    ['The Silk Roads', 'Peter Frankopan', 2015, 672],
+    ['1776', 'David McCullough', 2005, 400],
+    ['The Rise and Fall of Third Reich', 'William Shirer', 1960, 1249],
+    ['A People\'s History of the US', 'Howard Zinn', 1980, 729],
+    ['The Crusades', 'Thomas Asbridge', 2010, 720],
+    ['Alexander of Macedon', 'Peter Green', 1991, 617],
+    ['The Roman Empire', 'Colin Wells', 1992, 368],
+    ['India After Gandhi', 'Ramachandra Guha', 2007, 900],
+    ['Empire of Cotton', 'Sven Beckert', 2014, 512],
+    ['The Age of Revolution', 'Eric Hobsbawm', 1962, 376],
+    ['The Fall of the Roman Empire', 'Peter Heather', 2006, 576],
+    ['Medieval History', 'Susan Wise Bauer', 2009, 870],
+    ['Genghis Khan', 'Jack Weatherford', 2004, 352],
+    ['The Mongol Empire', 'Timothy May', 2012, 304],
+    ['The Byzantine Empire', 'Robert Browning', 1980, 272],
+    ['The Ottoman Empire', 'Halil Inalcik', 1973, 260],
+    ['Independence: India', 'Boria Majumdar', 2021, 420],
+  ]),
+  ...createBooks('True Crime', '🕵️', [
+    ['Mindhunter', 'John Douglas', 1995, 432],
+    ['I\'ll Be Gone in the Dark', 'Michelle McNamara', 2018, 360],
+    ['Helter Skelter', 'Vincent Bugliosi', 1974, 528],
+    ['In Cold Blood', 'Truman Capote', 1966, 432],
+    ['The Monster of Florence', 'Douglas Preston', 2008, 336],
+    ['Columbine', 'Dave Cullen', 2009, 448],
+    ['Lost Girls', 'Robert Kolker', 2013, 288],
+    ['Say Nothing', 'Patrick Radden Keefe', 2018, 432],
+    ['Midnight in the Garden', 'John Berendt', 1994, 480],
+    ['Devil in the White City', 'Erik Larson', 2003, 447],
+    ['A Death in Belmont', 'Sebastian Junger', 2006, 272],
+    ['Bad Blood', 'John Carreyrou', 2018, 352],
+    ['Empire of Pain', 'Patrick Radden Keefe', 2021, 560],
+    ['American Fire', 'Monica Hesse', 2017, 240],
+    ['Catch and Kill', 'Ronan Farrow', 2019, 448],
+    ['Evidence of Evil', 'Glenna Whitley', 1993, 256],
+    ['The Feather Thief', 'Kirk Wallace Johnson', 2018, 320],
+    ['The Five', 'Hallie Rubenhold', 2019, 368],
+    ['Case of Need', 'Michael Crichton', 1968, 351],
+    ['Smoke and Mirrors', 'Gary Tzu', 2015, 288],
+  ]),
+  ...createBooks('Memoir', '📝', [
+    ['The Glass Castle', 'Jeannette Walls', 2005, 288],
+    ['Educated', 'Tara Westover', 2018, 352],
+    ['Wild', 'Cheryl Strayed', 2012, 336],
+    ['Born a Crime', 'Trevor Noah', 2016, 304],
+    ['Between the World and Me', 'Ta-Nehisi Coates', 2015, 176],
+    ['Kitchen Confidential', 'Anthony Bourdain', 2000, 302],
+    ['The Year of Magical Thinking', 'Joan Didion', 2005, 240],
+    ['Night', 'Elie Wiesel', 1958, 120],
+    ['Just Kids', 'Patti Smith', 2010, 304],
+    ['Hillbilly Elegy', 'J.D. Vance', 2016, 272],
+    ['Know My Name', 'Chanel Miller', 2019, 368],
+    ['When Breath Becomes Air', 'Paul Kalanithi', 2016, 256],
+    ['The Diving Bell and the Butterfly', 'Jean-Dominique Bauby', 1997, 144],
+    ['Naked', 'David Sedaris', 1997, 352],
+    ['Fun Home', 'Alison Bechdel', 2006, 232],
+    ['The Liars\' Club', 'Mary Karr', 1995, 320],
+    ['The Autobiography of Malcolm X', 'Malcolm X', 1965, 527],
+    ['My Own Story', 'Emmeline Pankhurst', 1914, 363],
+    ['Dreams from My Father', 'Barack Obama', 1995, 457],
+    ['I Know Why the Caged Bird Sings', 'Maya Angelou', 1969, 281],
+  ]),
+];
+
+function createBooks(category, emoji, bookList) {
+  return bookList.map(([title, author, year, price], i) => ({
+    id: `${category.replace(/\s+/g,'-')}-${i}`,
+    title, author,
+    category,
+    emoji,
+    year,
+    price,
+    available: Math.random() > 0.3, // 70% available
+    borrowedBy: null,
+    borrowDate: null,
+  }));
+}
+
+// ─── App State ────────────────────────────────────────────
+let currentRole = null;
+let currentUser = null;
+let currentView = null;
+let selectedRole = 'admin';
+let booksPage = 1;
+const BOOKS_PER_PAGE = 12;
+let filteredBooks = [];
+let currentCategory = null;
+
+// ─── Initialize Storage ────────────────────────────────────
+function initStorage() {
+  if (!localStorage.getItem('lib_books')) {
+    localStorage.setItem('lib_books', JSON.stringify(BOOKS_DATA));
+  }
+  if (!localStorage.getItem('lib_users')) {
+    const users = [
+      { id: 'u1', name: 'Library Admin', email: 'admin@rvrjc.ac.in', role: 'admin', password: 'admin123' },
+      { id: 'u2', name: 'Dr. Ramesh Kumar', email: 'teacher@rvrjc.ac.in', role: 'teacher', password: 'teacher123', dept: 'CSE' },
+      { id: 'u3', name: 'Priya Sharma', email: 'student@rvrjc.ac.in', role: 'student', password: 'student123', dept: 'ECE', year: '3rd Year' },
+    ];
+    localStorage.setItem('lib_users', JSON.stringify(users));
+  }
+  if (!localStorage.getItem('lib_borrowed')) {
+    localStorage.setItem('lib_borrowed', JSON.stringify([]));
+  }
+  if (!localStorage.getItem('lib_recommendations')) {
+    localStorage.setItem('lib_recommendations', JSON.stringify([]));
+  }
+}
+
+function getBooks() { return JSON.parse(localStorage.getItem('lib_books') || '[]'); }
+function saveBooks(b) { localStorage.setItem('lib_books', JSON.stringify(b)); }
+function getUsers() { return JSON.parse(localStorage.getItem('lib_users') || '[]'); }
+function saveUsers(u) { localStorage.setItem('lib_users', JSON.stringify(u)); }
+function getBorrowed() { return JSON.parse(localStorage.getItem('lib_borrowed') || '[]'); }
+function saveBorrowed(b) { localStorage.setItem('lib_borrowed', JSON.stringify(b)); }
+function getRecs() { return JSON.parse(localStorage.getItem('lib_recommendations') || '[]'); }
+function saveRecs(r) { localStorage.setItem('lib_recommendations', JSON.stringify(r)); }
+
+// ─── Toast ─────────────────────────────────────────────────
+function toast(msg, type='info') {
+  const icons = { success:'✅', error:'❌', info:'ℹ️' };
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(() => { t.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(()=>t.remove(),300); }, 3000);
+}
+
+// ─── Modal ─────────────────────────────────────────────────
+function openModal(html) {
+  document.getElementById('modal-content').innerHTML = html;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+// ─── Page Navigation ───────────────────────────────────────
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  window.scrollTo(0,0);
+  closeSidebar();
+
+  const loginBtn = document.getElementById('nav-login-btn');
+  const userInfo = document.getElementById('user-info');
+  if (page === 'home' || page === 'login') {
+    loginBtn.classList.remove('hidden');
+    userInfo.classList.add('hidden');
+  }
+}
+
+function scrollToFeatures() {
+  showPage('home');
+  setTimeout(() => {
+    document.getElementById('features-section').scrollIntoView({behavior:'smooth'});
+  }, 100);
+}
+function scrollToFooter() {
+  showPage('home');
+  setTimeout(() => {
+    document.getElementById('footer-section').scrollIntoView({behavior:'smooth'});
+  }, 100);
+}
+
+// ─── Theme Toggle ──────────────────────────────────────────
+let darkMode = false;
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  darkMode = !darkMode;
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = darkMode ? '☀️' : '🌙';
+});
+
+// ─── Hamburger / Sidebar ───────────────────────────────────
+function toggleSidebar() {
+  const sidebarIds = ['student-sidebar','teacher-sidebar','admin-sidebar'];
+  sidebarIds.forEach(id => {
+    const s = document.getElementById(id);
+    if (s && s.closest('.active')) {
+      s.classList.toggle('open');
+      document.getElementById('sidebar-backdrop').classList.toggle('active', s.classList.contains('open'));
+    }
+  });
+}
+function closeSidebar() {
+  document.querySelectorAll('.sidebar').forEach(s => s.classList.remove('open'));
+  document.getElementById('sidebar-backdrop').classList.remove('active');
+}
+
+// ─── Login ─────────────────────────────────────────────────
+function selectRole(role, btn) {
+  selectedRole = role;
+  document.querySelectorAll('.role-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  const emailErr = document.getElementById('email-error');
+  const passErr = document.getElementById('pass-error');
+  emailErr.style.display = 'none';
+  passErr.style.display = 'none';
+
+  const users = getUsers();
+  const user = users.find(u => u.email === email && u.role === selectedRole);
+  if (!user) { emailErr.style.display = 'block'; emailErr.textContent = 'No account found for this email/role.'; return; }
+  if (user.password !== pass) { passErr.style.display = 'block'; return; }
+
+  currentUser = user;
+  currentRole = user.role;
+  document.getElementById('nav-login-btn').classList.add('hidden');
+  const userInfo = document.getElementById('user-info');
+  userInfo.classList.remove('hidden');
+  document.getElementById('user-name-display').textContent = `👤 ${user.name}`;
+
+  if (user.role === 'admin') {
+    showPage('admin');
+    renderAdminDashboard();
+  } else if (user.role === 'teacher') {
+    document.getElementById('teacher-name').textContent = user.name;
+    showPage('teacher');
+    renderTeacherDashboard();
+  } else {
+    document.getElementById('student-name').textContent = user.name;
+    showPage('student');
+    renderStudentDashboard();
+  }
+  toast(`Welcome back, ${user.name}!`, 'success');
+}
+
+function logout() {
+  currentUser = null; currentRole = null;
+  document.getElementById('nav-login-btn').classList.remove('hidden');
+  document.getElementById('user-info').classList.add('hidden');
+  showPage('home');
+  toast('Logged out successfully.', 'info');
+}
+
+// ─── Switch Dashboard View ─────────────────────────────────
+function switchView(linkEl, role) {
+  if (!linkEl) return;
+  const view = linkEl.getAttribute('data-view');
+  if (!view) return;
+  linkEl.closest('ul').querySelectorAll('a').forEach(a => a.classList.remove('active'));
+  linkEl.classList.add('active');
+  currentView = view;
+  closeSidebar();
+  if (role === 'student') renderStudentView(view);
+  else if (role === 'teacher') renderTeacherView(view);
+  else if (role === 'admin') renderAdminView(view);
+}
+
+// ─── CATEGORIES DATA ───────────────────────────────────────
+const CATEGORIES = [
+  { name:'Civil Engineering', emoji:'🏗️', group:'Engineering' },
+  { name:'Mechanical Engineering', emoji:'⚙️', group:'Engineering' },
+  { name:'Electrical Engineering', emoji:'⚡', group:'Engineering' },
+  { name:'Electronics and Communication Engineering', emoji:'📡', group:'Engineering' },
+  { name:'Chemical Engineering', emoji:'🧪', group:'Engineering' },
+  { name:'Computer Science and Engineering', emoji:'💻', group:'Engineering' },
+  { name:'Information Technology', emoji:'🖥️', group:'Engineering' },
+  { name:'Artificial Intelligence and Machine Learning', emoji:'🤖', group:'Engineering' },
+  { name:'Biotechnology', emoji:'🧬', group:'Engineering' },
+  { name:'Aerospace Engineering', emoji:'🚀', group:'Engineering' },
+  { name:'Mechatronics', emoji:'🔧', group:'Engineering' },
+  { name:'Robotics and Automation', emoji:'🦾', group:'Engineering' },
+  { name:'Fantasy', emoji:'🧙', group:'General' },
+  { name:'Action/Adventure', emoji:'⚔️', group:'General' },
+  { name:'Romance', emoji:'💕', group:'General' },
+  { name:'Mystery', emoji:'🔍', group:'General' },
+  { name:'Thriller', emoji:'😱', group:'General' },
+  { name:'Science Fiction', emoji:'🚀', group:'General' },
+  { name:'Horror', emoji:'👻', group:'General' },
+  { name:'Biography', emoji:'📖', group:'General' },
+  { name:'Memoir', emoji:'📝', group:'General' },
+  { name:'Self-Help', emoji:'💪', group:'General' },
+  { name:'History', emoji:'📜', group:'General' },
+  { name:'True Crime', emoji:'🕵️', group:'General' },
+];
+
+// ─── STUDENT DASHBOARD ─────────────────────────────────────
+function renderStudentDashboard() {
+  renderStudentView('student-home');
+}
+
+function renderStudentView(view) {
+  const main = document.getElementById('student-main');
+  if (view === 'student-home') {
+    const books = getBooks();
+    const borrowed = getBorrowed().filter(b => b.userId === currentUser.id && b.returned === false);
+    main.innerHTML = `
+      <h2>Welcome back, ${currentUser.name}! 👋</h2>
+      <p class="subtitle">Explore thousands of books across 22 categories.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-card-icon">📚</span><span class="stat-card-num">${books.length}</span><div class="stat-card-lbl">Total Books</div></div>
+        <div class="stat-card"><span class="stat-card-icon">✅</span><span class="stat-card-num">${books.filter(b=>b.available).length}</span><div class="stat-card-lbl">Available</div></div>
+        <div class="stat-card"><span class="stat-card-icon">📋</span><span class="stat-card-num">${borrowed.length}</span><div class="stat-card-lbl">My Borrowed</div></div>
+        <div class="stat-card"><span class="stat-card-icon">📂</span><span class="stat-card-num">22</span><div class="stat-card-lbl">Categories</div></div>
+      </div>
+      <div class="section-header" style="text-align:left;margin-bottom:20px;">
+        <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);">🏗️ Engineering Categories</h3>
+      </div>
+      <div class="categories-grid">${CATEGORIES.filter(c=>c.group==='Engineering').map(c=>renderCategoryCard(c,'student')).join('')}</div>
+      <div class="section-header" style="text-align:left;margin:28px 0 20px;">
+        <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);">📚 General Categories</h3>
+      </div>
+      <div class="categories-grid">${CATEGORIES.filter(c=>c.group==='General').map(c=>renderCategoryCard(c,'student')).join('')}</div>
+    `;
+  } else if (view === 'student-books') {
+    renderBooksView(main, 'student');
+  } else if (view === 'student-borrowed') {
+    renderMyBorrowedView(main);
+  }
+}
+
+function renderCategoryCard(cat, role) {
+  const books = getBooks().filter(b => b.category === cat.name);
+  const avail = books.filter(b=>b.available).length;
+  return `<div class="category-card" onclick="openCategoryBooks('${cat.name}','${role}')" role="button" tabindex="0" aria-label="Open ${cat.name} books">
+    <span class="cat-emoji">${cat.emoji}</span>
+    <div class="cat-name">${cat.name}</div>
+    <div class="cat-count">${books.length} books • ${avail} available</div>
+  </div>`;
+}
+
+function openCategoryBooks(category, role) {
+  currentCategory = category;
+  if (role === 'student') {
+    document.querySelectorAll('#student-sidebar a').forEach(a=>a.classList.remove('active'));
+    renderStudentView('student-books');
+  } else if (role === 'teacher') {
+    document.querySelectorAll('#teacher-sidebar a').forEach(a=>a.classList.remove('active'));
+    renderTeacherView('teacher-books');
+  }
+}
+
+function renderBooksView(container, role) {
+  const allBooks = getBooks();
+  const cats = [...new Set(allBooks.map(b=>b.category))];
+  container.innerHTML = `
+    <h2>📚 Browse Books</h2>
+    <p class="subtitle">Find and borrow books from our collection.</p>
+    ${currentCategory ? `<div class="breadcrumb"><a href="#" onclick="clearCategory('${role}')">All Books</a> › ${currentCategory}</div>` : ''}
+    <div class="books-toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="book-search" placeholder="Search by title or author…" oninput="filterBooks('${role}')" aria-label="Search books"/>
+      </div>
+      <select class="filter-select" id="cat-filter" onchange="filterBooks('${role}')" aria-label="Filter by category">
+        <option value="">All Categories</option>
+        ${cats.map(c=>`<option value="${c}" ${currentCategory===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+      <select class="sort-select" id="avail-sort" onchange="filterBooks('${role}')" aria-label="Sort books">
+        <option value="">Sort by…</option>
+        <option value="available">Available First</option>
+        <option value="title">Title A-Z</option>
+        <option value="year">Newest First</option>
+      </select>
+    </div>
+    <div id="books-grid-container"></div>
+    <div id="pagination-container"></div>
+  `;
+  filterBooks(role);
+}
+
+function clearCategory(role) {
+  currentCategory = null;
+  if (role === 'student') renderStudentView('student-books');
+  else renderTeacherView('teacher-books');
+}
+
+function filterBooks(role) {
+  const search = (document.getElementById('book-search')?.value || '').toLowerCase();
+  const catF = document.getElementById('cat-filter')?.value || '';
+  const sort = document.getElementById('avail-sort')?.value || '';
+  let books = getBooks();
+  if (catF) books = books.filter(b=>b.category===catF);
+  else if (currentCategory) books = books.filter(b=>b.category===currentCategory);
+  if (search) books = books.filter(b=>b.title.toLowerCase().includes(search)||b.author.toLowerCase().includes(search));
+  if (sort==='available') books.sort((a,b)=>b.available-a.available);
+  else if (sort==='title') books.sort((a,b)=>a.title.localeCompare(b.title));
+  else if (sort==='year') books.sort((a,b)=>b.year-a.year);
+  filteredBooks = books;
+  booksPage = 1;
+  renderBooksPage(role);
+}
+
+function renderBooksPage(role) {
+  const start = (booksPage-1)*BOOKS_PER_PAGE;
+  const pageBooks = filteredBooks.slice(start, start+BOOKS_PER_PAGE);
+  const totalPages = Math.ceil(filteredBooks.length/BOOKS_PER_PAGE);
+  const gc = document.getElementById('books-grid-container');
+  const pc = document.getElementById('pagination-container');
+  if (!gc) return;
+
+  if (pageBooks.length === 0) {
+    gc.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><h3>No books found</h3><p>Try a different search or filter.</p></div>`;
+    pc.innerHTML = '';
+    return;
+  }
+
+  gc.innerHTML = `<div class="books-grid">${pageBooks.map(b=>renderBookCard(b, role)).join('')}</div>`;
+
+  if (totalPages > 1) {
+    let pages = '';
+    for (let i=1;i<=totalPages;i++) {
+      pages += `<button class="page-btn ${i===booksPage?'active':''}" onclick="goToPage(${i},'${role}')" aria-label="Page ${i}">${i}</button>`;
+    }
+    pc.innerHTML = `<div class="pagination">${pages}</div>`;
+  } else { pc.innerHTML=''; }
+}
+
+function goToPage(p, role) {
+  booksPage = p;
+  renderBooksPage(role);
+}
+
+function renderBookCard(book, role) {
+  const borrowed = getBorrowed();
+  const myBorrow = borrowed.find(b=>b.bookId===book.id && b.userId===currentUser?.id && !b.returned);
+  const canBorrow = book.available && !myBorrow;
+  return `<div class="book-card">
+    <div class="book-cover">${book.emoji}</div>
+    <div class="book-title">${book.title}</div>
+    <div class="book-author">by ${book.author}</div>
+    <div class="book-meta">
+      <span class="book-price">₹${book.price}</span>
+      <span class="book-year">${book.year}</span>
+    </div>
+    <div class="book-footer">
+      <span class="badge ${book.available?'badge-available':'badge-unavailable'}">${book.available?'✓ Available':'✗ Unavailable'}</span>
+      ${myBorrow
+        ? `<button class="btn btn-sm btn-outline" onclick="returnBook('${book.id}','${role}')">↩ Return</button>`
+        : `<button class="btn btn-sm btn-primary" ${!canBorrow?'disabled':''} onclick="${canBorrow?`borrowBook('${book.id}','${role}')`:''}" aria-disabled="${!canBorrow}">${canBorrow?'Borrow':'N/A'}</button>`
+      }
+    </div>
+  </div>`;
+}
+
+function borrowBook(bookId, role) {
+  const books = getBooks();
+  const book = books.find(b=>b.id===bookId);
+  if (!book||!book.available) return;
+  book.available = false;
+  book.borrowedBy = currentUser.id;
+  book.borrowDate = new Date().toISOString();
+  saveBooks(books);
+
+  const borrowed = getBorrowed();
+  borrowed.push({
+    id: Date.now().toString(),
+    bookId, userId: currentUser.id,
+    userName: currentUser.name,
+    bookTitle: book.title,
+    category: book.category,
+    borrowDate: new Date().toLocaleDateString(),
+    returned: false
+  });
+  saveBorrowed(borrowed);
+  toast(`"${book.title}" borrowed successfully!`, 'success');
+  filterBooks(role);
+}
+
+function returnBook(bookId, role) {
+  const books = getBooks();
+  const book = books.find(b=>b.id===bookId);
+  if (book) { book.available = true; book.borrowedBy = null; book.borrowDate = null; }
+  saveBooks(books);
+
+  const borrowed = getBorrowed();
+  const rec = borrowed.find(b=>b.bookId===bookId && b.userId===currentUser.id && !b.returned);
+  if (rec) { rec.returned = true; rec.returnDate = new Date().toLocaleDateString(); }
+  saveBorrowed(borrowed);
+  toast('Book returned successfully!', 'success');
+  filterBooks(role);
+}
+
+function renderMyBorrowedView(container) {
+  const borrowed = getBorrowed().filter(b=>b.userId===currentUser.id);
+  container.innerHTML = `
+    <h2>📋 My Borrowed Books</h2>
+    <p class="subtitle">Your complete borrowing history.</p>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead><tr><th>Book Title</th><th>Category</th><th>Borrowed On</th><th>Status</th><th>Returned</th></tr></thead>
+        <tbody>
+          ${borrowed.length===0
+            ? `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-muted);">No books borrowed yet.</td></tr>`
+            : borrowed.map(b=>`<tr>
+                <td><strong>${b.bookTitle}</strong></td>
+                <td>${b.category}</td>
+                <td>${b.borrowDate}</td>
+                <td><span class="badge ${b.returned?'badge-available':'badge-unavailable'}">${b.returned?'Returned':'Active'}</span></td>
+                <td>${b.returnDate||'—'}</td>
+              </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ─── TEACHER DASHBOARD ─────────────────────────────────────
+function renderTeacherDashboard() { renderTeacherView('teacher-home'); }
+
+function renderTeacherView(view) {
+  const main = document.getElementById('teacher-main');
+  if (view === 'teacher-home') {
+    const books = getBooks();
+    const borrowed = getBorrowed().filter(b=>b.userId===currentUser.id&&!b.returned);
+    const recs = getRecs().filter(r=>r.userId===currentUser.id);
+    main.innerHTML = `
+      <h2>Hello, ${currentUser.name}! 👩‍🏫</h2>
+      <p class="subtitle">Access engineering resources and manage your borrowings.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-card-icon">📚</span><span class="stat-card-num">${books.length}</span><div class="stat-card-lbl">Total Books</div></div>
+        <div class="stat-card"><span class="stat-card-icon">📋</span><span class="stat-card-num">${borrowed.length}</span><div class="stat-card-lbl">Currently Borrowed</div></div>
+        <div class="stat-card"><span class="stat-card-icon">⭐</span><span class="stat-card-num">${recs.length}</span><div class="stat-card-lbl">My Recommendations</div></div>
+        <div class="stat-card"><span class="stat-card-icon">✅</span><span class="stat-card-num">${books.filter(b=>b.available).length}</span><div class="stat-card-lbl">Available Now</div></div>
+      </div>
+      <div class="section-header" style="text-align:left;margin-bottom:20px;">
+        <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);">🏗️ Engineering Categories</h3>
+      </div>
+      <div class="categories-grid">${CATEGORIES.filter(c=>c.group==='Engineering').map(c=>renderCategoryCard(c,'teacher')).join('')}</div>
+      <div class="section-header" style="text-align:left;margin:28px 0 20px;">
+        <h3 style="font-family:var(--font-display);font-size:1.3rem;color:var(--text-primary);">📚 General Categories</h3>
+      </div>
+      <div class="categories-grid">${CATEGORIES.filter(c=>c.group==='General').map(c=>renderCategoryCard(c,'teacher')).join('')}</div>
+    `;
+  } else if (view === 'teacher-books') {
+    renderBooksView(main, 'teacher');
+  } else if (view === 'teacher-borrowed') {
+    renderMyBorrowedView(main);
+  } else if (view === 'teacher-recommend') {
+    renderRecommendView(main);
+  }
+}
+
+function renderRecommendView(container) {
+  const recs = getRecs().filter(r=>r.userId===currentUser.id);
+  container.innerHTML = `
+    <h2>⭐ Recommend Books</h2>
+    <p class="subtitle">Recommend books for the library collection.</p>
+    <div class="panel">
+      <div class="panel-header"><div class="panel-title">Add Recommendation</div></div>
+      <div class="grid-2">
+        <div class="form-group"><label>Book Title</label><input type="text" id="rec-title" placeholder="Book title…"/></div>
+        <div class="form-group"><label>Author</label><input type="text" id="rec-author" placeholder="Author name…"/></div>
+        <div class="form-group"><label>Category</label>
+          <select id="rec-cat"><option value="">Select…</option>${CATEGORIES.map(c=>`<option>${c.name}</option>`).join('')}</select>
+        </div>
+        <div class="form-group"><label>Reason</label><input type="text" id="rec-reason" placeholder="Why recommend this book?"/></div>
+      </div>
+      <button class="btn btn-primary" onclick="addRecommendation()">Add Recommendation</button>
+    </div>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Reason</th><th>Date</th></tr></thead>
+        <tbody>
+          ${recs.length===0
+            ? `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--text-muted);">No recommendations yet.</td></tr>`
+            : recs.map(r=>`<tr><td>${r.title}</td><td>${r.author}</td><td>${r.category}</td><td>${r.reason}</td><td>${r.date}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function addRecommendation() {
+  const title = document.getElementById('rec-title')?.value.trim();
+  const author = document.getElementById('rec-author')?.value.trim();
+  const category = document.getElementById('rec-cat')?.value;
+  const reason = document.getElementById('rec-reason')?.value.trim();
+  if (!title||!author||!category) { toast('Please fill all required fields.','error'); return; }
+  const recs = getRecs();
+  recs.push({ id:Date.now().toString(), title, author, category, reason, userId:currentUser.id, userName:currentUser.name, date:new Date().toLocaleDateString() });
+  saveRecs(recs);
+  toast('Recommendation added!','success');
+  renderRecommendView(document.getElementById('teacher-main'));
+}
+
+// ─── ADMIN DASHBOARD ───────────────────────────────────────
+function renderAdminDashboard() { renderAdminView('admin-home'); }
+
+function renderAdminView(view) {
+  const main = document.getElementById('admin-main');
+  if (view === 'admin-home') {
+    const books = getBooks();
+    const borrowed = getBorrowed().filter(b=>!b.returned);
+    const users = getUsers();
+    main.innerHTML = `
+      <h2>📊 Admin Dashboard</h2>
+      <p class="subtitle">Comprehensive overview of the library system.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-card-icon">📚</span><span class="stat-card-num">${books.length}</span><div class="stat-card-lbl">Total Books</div></div>
+        <div class="stat-card"><span class="stat-card-icon">✅</span><span class="stat-card-num">${books.filter(b=>b.available).length}</span><div class="stat-card-lbl">Available</div></div>
+        <div class="stat-card"><span class="stat-card-icon">📤</span><span class="stat-card-num">${borrowed.length}</span><div class="stat-card-lbl">Currently Borrowed</div></div>
+        <div class="stat-card"><span class="stat-card-icon">👥</span><span class="stat-card-num">${users.length}</span><div class="stat-card-lbl">Total Users</div></div>
+        <div class="stat-card"><span class="stat-card-icon">📂</span><span class="stat-card-num">22</span><div class="stat-card-lbl">Categories</div></div>
+        <div class="stat-card"><span class="stat-card-icon">⭐</span><span class="stat-card-num">${getRecs().length}</span><div class="stat-card-lbl">Recommendations</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">📈 Category Summary</div></div>
+        <div class="categories-grid">
+          ${CATEGORIES.map(c=>{
+            const cb = books.filter(b=>b.category===c.name);
+            return `<div class="category-card" style="cursor:default;">
+              <span class="cat-emoji">${c.emoji}</span>
+              <div class="cat-name">${c.name}</div>
+              <div class="cat-count">${cb.length} books • ${cb.filter(b=>b.available).length} available</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else if (view === 'admin-books') {
+    renderAdminBooks(main);
+  } else if (view === 'admin-borrowed') {
+    renderAdminBorrowed(main);
+  } else if (view === 'admin-users') {
+    renderAdminUsers(main);
+  }
+}
+
+function renderAdminBooks(container) {
+  const books = getBooks();
+  container.innerHTML = `
+    <h2>📚 Manage Books</h2>
+    <p class="subtitle">Add, edit, and remove books from the library.</p>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">All Books (${books.length})</div>
+        <button class="btn btn-primary" onclick="openAddBookModal()">+ Add Book</button>
+      </div>
+      <div class="books-toolbar" style="margin-bottom:16px;">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="admin-search" placeholder="Search books…" oninput="adminFilterBooks()" aria-label="Search"/>
+        </div>
+        <select class="filter-select" id="admin-cat-filter" onchange="adminFilterBooks()">
+          <option value="">All Categories</option>
+          ${[...new Set(books.map(b=>b.category))].map(c=>`<option>${c}</option>`).join('')}
+        </select>
+        <select class="sort-select" id="admin-avail-filter" onchange="adminFilterBooks()">
+          <option value="">All Status</option>
+          <option value="available">Available</option>
+          <option value="unavailable">Unavailable</option>
+        </select>
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table" id="admin-books-table">
+          <thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Year</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="admin-books-tbody"></tbody>
+        </table>
+      </div>
+      <div id="admin-pagination"></div>
+    </div>
+  `;
+  adminFilterBooks();
+}
+
+let adminPage = 1;
+let adminFiltered = [];
+function adminFilterBooks() {
+  const search = (document.getElementById('admin-search')?.value||'').toLowerCase();
+  const cat = document.getElementById('admin-cat-filter')?.value||'';
+  const avail = document.getElementById('admin-avail-filter')?.value||'';
+  let books = getBooks();
+  if (search) books = books.filter(b=>b.title.toLowerCase().includes(search)||b.author.toLowerCase().includes(search));
+  if (cat) books = books.filter(b=>b.category===cat);
+  if (avail==='available') books = books.filter(b=>b.available);
+  else if (avail==='unavailable') books = books.filter(b=>!b.available);
+  adminFiltered = books;
+  adminPage = 1;
+  renderAdminBooksTable();
+}
+
+function renderAdminBooksTable() {
+  const tbody = document.getElementById('admin-books-tbody');
+  const pc = document.getElementById('admin-pagination');
+  if (!tbody) return;
+  const start = (adminPage-1)*15;
+  const pageBooks = adminFiltered.slice(start, start+15);
+  const totalPages = Math.ceil(adminFiltered.length/15);
+
+  tbody.innerHTML = pageBooks.length===0
+    ? `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">No books found.</td></tr>`
+    : pageBooks.map(b=>`<tr>
+        <td><strong>${b.title}</strong></td>
+        <td>${b.author}</td>
+        <td><span style="font-size:0.8rem;">${b.category}</span></td>
+        <td>${b.year}</td>
+        <td>₹${b.price}</td>
+        <td><span class="badge ${b.available?'badge-available':'badge-unavailable'}">${b.available?'Available':'Unavailable'}</span></td>
+        <td>
+          <button class="btn btn-sm btn-outline" onclick="openEditBookModal('${b.id}')" style="margin-right:6px;">✏️</button>
+          <button class="btn btn-sm" onclick="toggleAvailability('${b.id}')" style="background:var(--lavender-100);color:var(--accent);margin-right:6px;">🔄</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteBook('${b.id}')">🗑️</button>
+        </td>
+      </tr>`).join('');
+
+  if (pc && totalPages > 1) {
+    let pages = '';
+    for (let i=1;i<=totalPages;i++) pages += `<button class="page-btn ${i===adminPage?'active':''}" onclick="adminGoPage(${i})">${i}</button>`;
+    pc.innerHTML = `<div class="pagination" style="margin-top:16px;">${pages}</div>`;
+  } else if (pc) { pc.innerHTML = ''; }
+}
+
+function adminGoPage(p) { adminPage = p; renderAdminBooksTable(); }
+
+function openAddBookModal() {
+  openModal(`
+    <h3>➕ Add New Book</h3>
+    <div class="grid-2">
+      <div class="form-group"><label>Title</label><input type="text" id="m-title" placeholder="Book title"/></div>
+      <div class="form-group"><label>Author</label><input type="text" id="m-author" placeholder="Author name"/></div>
+      <div class="form-group"><label>Category</label>
+        <select id="m-cat"><option value="">Select…</option>${CATEGORIES.map(c=>`<option>${c.name}</option>`).join('')}</select>
+      </div>
+      <div class="form-group"><label>Year</label><input type="number" id="m-year" placeholder="2024" min="1800" max="2030"/></div>
+      <div class="form-group"><label>Price (₹)</label><input type="number" id="m-price" placeholder="500" min="0"/></div>
+      <div class="form-group"><label>Status</label>
+        <select id="m-status"><option value="true">Available</option><option value="false">Unavailable</option></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addBook()">Add Book</button>
+    </div>
+  `);
+}
+
+function addBook() {
+  const title = document.getElementById('m-title')?.value.trim();
+  const author = document.getElementById('m-author')?.value.trim();
+  const category = document.getElementById('m-cat')?.value;
+  const year = parseInt(document.getElementById('m-year')?.value)||2024;
+  const price = parseInt(document.getElementById('m-price')?.value)||500;
+  const available = document.getElementById('m-status')?.value==='true';
+  if (!title||!author||!category) { toast('Fill all required fields.','error'); return; }
+  const cat = CATEGORIES.find(c=>c.name===category);
+  const books = getBooks();
+  books.push({ id: Date.now().toString(), title, author, category, emoji: cat?.emoji||'📖', year, price, available, borrowedBy:null, borrowDate:null });
+  saveBooks(books);
+  closeModal();
+  toast(`"${title}" added successfully!`, 'success');
+  renderAdminBooks(document.getElementById('admin-main'));
+}
+
+function openEditBookModal(id) {
+  const book = getBooks().find(b=>b.id===id);
+  if (!book) return;
+  openModal(`
+    <h3>✏️ Edit Book</h3>
+    <div class="grid-2">
+      <div class="form-group"><label>Title</label><input type="text" id="m-title" value="${book.title}"/></div>
+      <div class="form-group"><label>Author</label><input type="text" id="m-author" value="${book.author}"/></div>
+      <div class="form-group"><label>Category</label>
+        <select id="m-cat">${CATEGORIES.map(c=>`<option ${c.name===book.category?'selected':''}>${c.name}</option>`).join('')}</select>
+      </div>
+      <div class="form-group"><label>Year</label><input type="number" id="m-year" value="${book.year}"/></div>
+      <div class="form-group"><label>Price (₹)</label><input type="number" id="m-price" value="${book.price}"/></div>
+      <div class="form-group"><label>Status</label>
+        <select id="m-status"><option value="true" ${book.available?'selected':''}>Available</option><option value="false" ${!book.available?'selected':''}>Unavailable</option></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditBook('${id}')">Save Changes</button>
+    </div>
+  `);
+}
+
+function saveEditBook(id) {
+  const books = getBooks();
+  const book = books.find(b=>b.id===id);
+  if (!book) return;
+  book.title = document.getElementById('m-title').value.trim();
+  book.author = document.getElementById('m-author').value.trim();
+  book.category = document.getElementById('m-cat').value;
+  book.year = parseInt(document.getElementById('m-year').value)||book.year;
+  book.price = parseInt(document.getElementById('m-price').value)||book.price;
+  book.available = document.getElementById('m-status').value==='true';
+  const cat = CATEGORIES.find(c=>c.name===book.category);
+  if (cat) book.emoji = cat.emoji;
+  saveBooks(books);
+  closeModal();
+  toast('Book updated!','success');
+  renderAdminBooks(document.getElementById('admin-main'));
+}
+
+function toggleAvailability(id) {
+  const books = getBooks();
+  const book = books.find(b=>b.id===id);
+  if (!book) return;
+  book.available = !book.available;
+  saveBooks(books);
+  toast(`Status updated to ${book.available?'Available':'Unavailable'}.`,'info');
+  adminFilterBooks();
+}
+
+function deleteBook(id) {
+  openModal(`
+    <h3>🗑️ Confirm Delete</h3>
+    <p style="color:var(--text-muted);margin-bottom:24px;">Are you sure you want to delete this book? This action cannot be undone.</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete('${id}')">Delete</button>
+    </div>
+  `);
+}
+
+function confirmDelete(id) {
+  const books = getBooks().filter(b=>b.id!==id);
+  saveBooks(books);
+  closeModal();
+  toast('Book deleted.','info');
+  renderAdminBooks(document.getElementById('admin-main'));
+}
+
+function renderAdminBorrowed(container) {
+  const borrowed = getBorrowed();
+  container.innerHTML = `
+    <h2>📋 All Borrowed Books</h2>
+    <p class="subtitle">Track all currently and previously borrowed books.</p>
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead><tr><th>Book Title</th><th>Category</th><th>Borrowed By</th><th>Borrow Date</th><th>Status</th><th>Return Date</th></tr></thead>
+        <tbody>
+          ${borrowed.length===0
+            ? `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted);">No borrow records.</td></tr>`
+            : borrowed.map(b=>`<tr>
+                <td><strong>${b.bookTitle}</strong></td>
+                <td>${b.category}</td>
+                <td>${b.userName}</td>
+                <td>${b.borrowDate}</td>
+                <td><span class="badge ${b.returned?'badge-available':'badge-unavailable'}">${b.returned?'Returned':'Active'}</span></td>
+                <td>${b.returnDate||'—'}</td>
+              </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderAdminUsers(container) {
+  const users = getUsers();
+  container.innerHTML = `
+    <h2>👥 Manage Users</h2>
+    <p class="subtitle">View and manage all library users.</p>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">All Users (${users.length})</div>
+        <button class="btn btn-primary" onclick="openAddUserModal()">+ Add User</button>
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+          <tbody>
+            ${users.map(u=>`<tr>
+              <td><strong>${u.name}</strong></td>
+              <td>${u.email}</td>
+              <td><span class="badge" style="background:var(--lavender-100);color:var(--lavender-700);">${u.role}</span></td>
+              <td>
+                ${u.id!==currentUser.id?`<button class="btn btn-sm btn-danger" onclick="deleteUser('${u.id}')">🗑️ Remove</button>`:'<span style="color:var(--text-muted);font-size:0.8rem;">(You)</span>'}
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function openAddUserModal() {
+  openModal(`
+    <h3>👤 Add New User</h3>
+    <div class="form-group"><label>Full Name</label><input type="text" id="u-name" placeholder="User's full name"/></div>
+    <div class="form-group"><label>Email</label><input type="email" id="u-email" placeholder="user@rvrjc.ac.in"/></div>
+    <div class="form-group"><label>Password</label><input type="password" id="u-pass" placeholder="Password"/></div>
+    <div class="form-group"><label>Role</label>
+      <select id="u-role"><option value="student">Student</option><option value="teacher">Teacher</option><option value="admin">Admin</option></select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addUser()">Add User</button>
+    </div>
+  `);
+}
+
+function addUser() {
+  const name = document.getElementById('u-name').value.trim();
+  const email = document.getElementById('u-email').value.trim();
+  const pass = document.getElementById('u-pass').value;
+  const role = document.getElementById('u-role').value;
+  if (!name||!email||!pass) { toast('Fill all fields.','error'); return; }
+  const users = getUsers();
+  if (users.find(u=>u.email===email)) { toast('Email already exists.','error'); return; }
+  users.push({ id:Date.now().toString(), name, email, password:pass, role });
+  saveUsers(users);
+  closeModal();
+  toast('User added!','success');
+  renderAdminUsers(document.getElementById('admin-main'));
+}
+
+function deleteUser(id) {
+  openModal(`
+    <h3>Remove User</h3>
+    <p style="color:var(--text-muted);margin-bottom:24px;">Remove this user from the library system?</p>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeleteUser('${id}')">Remove</button>
+    </div>
+  `);
+}
+
+function confirmDeleteUser(id) {
+  const users = getUsers().filter(u=>u.id!==id);
+  saveUsers(users);
+  closeModal();
+  toast('User removed.','info');
+  renderAdminUsers(document.getElementById('admin-main'));
+}
+
+// ─── INIT ──────────────────────────────────────────────────
+function init() {
+  initStorage();
+  setTimeout(()=>{
+    document.getElementById('loading').style.display = 'none';
+  }, 900);
+}
+
+init();
+</script>
+</body>
+</html>
